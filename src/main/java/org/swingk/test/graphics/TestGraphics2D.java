@@ -1,16 +1,13 @@
-package org.swingk.test;
+package org.swingk.test.graphics;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TestGraphics2D extends Graphics2D {
+public abstract class TestGraphics2D extends Graphics2D {
 
     private final Graphics2D g2d;
-    private boolean inside;
-
     private final List<GraphicsCall> calls = new ArrayList<>();
 
     public TestGraphics2D(Graphics2D g2d) {
@@ -21,16 +18,7 @@ public class TestGraphics2D extends Graphics2D {
         return calls;
     }
 
-    @Override
-    public void draw(Shape s) {
-        if (!inside) {
-            inside = true;
-            calls.add(new GraphicsCall("draw", s));
-        }
-        try {
-            g2d.draw(s);
-        } finally {
-            inside = false;
-        }
+    public Graphics2D getDelegateGraphics() {
+        return g2d;
     }
 }
